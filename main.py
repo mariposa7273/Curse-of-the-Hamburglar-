@@ -3,7 +3,7 @@ import random
 import time
 import sys
 delay = 0.06
-#delay = 0.0
+
 inventory = []
 notdone = "playing"
 
@@ -70,11 +70,15 @@ def scene_one (character):
     p ("You are on a dirt path. The path leads two direction, North or South")
     p("Which way will you go? North or South ")
     path_direction = input("> ")
-    if path_direction == "North" or path_direction == "north":
+    if path_direction.lower() == "north":
         enemy1 (character)
+        if notdone == "restart":
+              return False
         item1(character)
+        if notdone == "restart":
+              return False
            
-    elif path_direction == "South" or path_direction == "south":
+    elif path_direction.lower() == "south":
         item1(character)
         if notdone == "restart":
                return False
@@ -82,7 +86,7 @@ def scene_one (character):
         if notdone == "restart":
                return False
     else:
-      #bad input just becomes the south option but with a bird
+      #bad input just becomes the north option but with a bird
         p("As you stand still, a bird swoops down from the sky and attacks you, to avoid the bird you run North up the path.")
         enemy1(character)
         if notdone == "restart":
@@ -130,7 +134,7 @@ def enemy1(character):
             p("After defeating Reyna, You follow the path out of her encampment, you need to keep moving if you want to defeat the hamburglar.")
           else:
              p('"You have failed. Game Over. Maybe try the other route huh or learn basic some human knowledege".')
-             notdone = "blobl"
+             notdone = "died"
              checkend()
              if notdone == "restart":
                return False
@@ -142,7 +146,7 @@ def enemy1(character):
       p("This thing has a dorsal fin but doesn't swim. An anklebiter and squirrel chaser but not a fighter.")
       p("What is it?")
       guess1 = input("> ")
-      if guess1.lower() == "land shark":
+      if guess1.lower() == "land shark" or guess1.lower() == "anklebiter the land shark":
         p('"You may pass young ranger." Splintertrunk says and his branches retract to reveal the wide open road."You have proven yourself worthy of continuining on your quest."')
         p("You've gained experience points and leveled up to level 2")
         p("You will now be able to aquire new items and be able to best stronger foes")
@@ -161,7 +165,7 @@ def enemy1(character):
           p("After passing Splintertrunk, You follow the path out of that sections of the forest, you need to keep moving if you want to defeat the hanburgalar")
         else:
           p('"You are so dumb. We cannot let someone as idiotic as you prance through the forest as they wish!" says Splintertrunk. Splintertrunk shouts into the forest and a giant tarantua comes at his call. It eats you and you die a slow and painful death in its stomach. Game Over.')
-          notdone = "brur"
+          notdone = "died"
           checkend()
           if notdone == "restart":
             return False
@@ -187,15 +191,14 @@ def item1(character):
 
 def scene_two(character):
   global notdone
-  
   #Fredrick's second level: rhyming Dificulty - medium
   if (character) == "Fredrick":
-      p("You come to a villiage and in the town square you see. the jester to the Hamburgaler, Mike the Microphone. He is performing for a crowd. You need to taunt him, you can do so with your new magic microphone or with an impromtu accordian solo. What item do you choose?")
+      p("You come to a village and in the town square you see. the jester to the Hamburgaler, Mike the Microphone. He is performing for a crowd. You need to taunt him, you can do so with your new mystical microphone or with an impromtu accordian solo. What item do you choose?")
       item_used = input("> ")
       if item_used.lower() == "accordion":
         p('You play a solo so epic Mike is stunned by your skill.')
         ('"Impressive" Mike says, "but I was thinking something a little less polka. How a rap battle?" You accept.')
-      elif item_used == "Microphone" or item_used == "microphone":
+      elif item_used.lower == "microphone" or item_used.lower == "Mystical microphone":
          p('You brandish your microphone and Mike says, "Ready for a rap battle are ya? Well you are on!"')
       else:
          print('"Impressive use of {thing}" Mike says "How a rap battle?" You accept.'.format(thing = item_used))
@@ -221,28 +224,22 @@ def scene_two(character):
           #third fail
           else:
             p("That's no rhyme! You got no game. Game Over")
-            notdone = "dfsk"
-            print(notdone)
+            notdone = "died"
             checkend()
-            print(notdone)
             if notdone == "restart":
               return False
         #second fail
         else:
           p("That's no rhyme! You got no game. Game Over")
-          notdone = "dfsk"
-          print(notdone)
+          notdone = "died"
           checkend()
-          print(notdone)
           if notdone == "restart":
             return False
       #first fail
       else:
         p("That's no rhyme! You got no game. Game Over")
-        notdone = "dfsk"
-        print(notdone)
+        notdone = "died"
         checkend()
-        print(notdone)
         if notdone == "restart":
           return False
   else:
@@ -268,7 +265,7 @@ def scene_two(character):
         p("Nice, you got past!")
       else:
         p("Wrong tool! You're now eternally lost in the woods and starve to death. Game Over.")
-        notdone = "dfsk"
+        notdone = "died"
         checkend()
         if notdone == "restart":
           return False
@@ -317,12 +314,12 @@ def final_battle(character):
         p(string)
       else:
         p("Wrong move! The hamburglar attacks you and you die. Game Over.")
-        notdone = "dfsk"
+        notdone = "died"
         checkend()
         if notdone == "restart":
           return False
   p("You won! The Hamburglar is dead and peace has returned to the kingdom!")
-  notdone = "dfsk"
+  notdone = "won"
   checkend()
   if notdone == "restart":
     return False
